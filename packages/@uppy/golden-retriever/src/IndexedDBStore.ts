@@ -1,16 +1,16 @@
 import type { UppyFile } from '@uppy/utils/lib/UppyFile'
 
 const indexedDB =
-  typeof window !== 'undefined' &&
-  (window.indexedDB ||
-    // @ts-expect-error unknown
-    window.webkitIndexedDB ||
-    // @ts-expect-error unknown
-    window.mozIndexedDB ||
-    // @ts-expect-error unknown
-    window.OIndexedDB ||
-    // @ts-expect-error unknown
-    window.msIndexedDB)
+  typeof globalThis !== 'undefined' &&
+  (globalThis.indexedDB ||
+    // @ts-ignore unknown
+    globalThis.webkitIndexedDB ||
+    // @ts-ignore unknown
+    globalThis.mozIndexedDB ||
+    // @ts-ignore unknown
+    globalThis.OIndexedDB ||
+    // @ts-ignore unknown
+    globalThis.msIndexedDB)
 
 const isSupported = !!indexedDB
 

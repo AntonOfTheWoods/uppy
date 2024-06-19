@@ -438,13 +438,12 @@ export class Uppy<M extends Meta, B extends Body> {
       },
     )
 
-    // Exposing uppy object on window for debugging and testing
-    if (this.opts.debug && typeof window !== 'undefined') {
+    // Exposing uppy object on globalThis for debugging and testing
+    if (this.opts.debug && typeof globalThis !== 'undefined') {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore Mutating the global object for debug purposes
-      window[this.opts.id] = this
+      globalThis[this.opts.id] = this
     }
-
     this.#addListeners()
   }
 
@@ -1696,15 +1695,15 @@ export class Uppy<M extends Meta, B extends Body> {
     })
 
     // show informer if offline
-    if (typeof window !== 'undefined' && window.addEventListener) {
-      window.addEventListener('online', this.#updateOnlineStatus)
-      window.addEventListener('offline', this.#updateOnlineStatus)
+    if (typeof globalThis !== 'undefined' && globalThis.addEventListener) {
+      globalThis.addEventListener('online', this.#updateOnlineStatus)
+      globalThis.addEventListener('offline', this.#updateOnlineStatus)
       setTimeout(this.#updateOnlineStatus, 3000)
     }
   }
 
   updateOnlineStatus(): void {
-    const online = window.navigator.onLine ?? true
+    const online = globalThis.navigator.onLine ?? true
     if (!online) {
       this.emit('is-offline')
       this.info(this.i18n('noInternetConnection'), 'error', 0)
@@ -1857,9 +1856,9 @@ export class Uppy<M extends Meta, B extends Body> {
       this.removePlugin(plugin)
     })
 
-    if (typeof window !== 'undefined' && window.removeEventListener) {
-      window.removeEventListener('online', this.#updateOnlineStatus)
-      window.removeEventListener('offline', this.#updateOnlineStatus)
+    if (typeof globalThis !== 'undefined' && globalThis.removeEventListener) {
+      globalThis.removeEventListener('online', this.#updateOnlineStatus)
+      globalThis.removeEventListener('offline', this.#updateOnlineStatus)
     }
   }
 
